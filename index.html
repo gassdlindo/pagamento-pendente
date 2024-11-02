@@ -5,7 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento Pendente</title>
     <style>
-        /* Your existing CSS styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eaeaea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 277px;
+            height: 700px;
+            padding: 0;
+            background-color: #fff;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .header {
+            background-image: url('header.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 60px;
+        }
+
+        .value-date-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            margin: -30px 20px 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .value-date {
+            text-align: left;
+            position: relative;
+            padding: 0 5px;
+            z-index: 1;
+        }
+
+        .value-date label {
+            font-size: 16px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .value-date p {
+            font-size: 16px;
+            color: # 1178d3;
+            font-weight: 800;
+            margin: 2px 0px 0px 0px;
+        }
+
+        .status-alert {
+            background-color: #f7f7f7;
+            color: #333;
+            text-align: left;
+            padding: 15px;
+            margin: 0 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-alert img {
+            height: 45px;
+            margin-right: 19px;
+        }
+
+        .status-text {
+            color: #ff635f;
+            font-size: 18px;
+        }
+
+        .status-text strong {
+            font-weight: bold;
+            color: #d9534f;
+            margin-bottom: 5px;
+        }
+
+        .receiver-info {
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 4px;
+            margin: 15px 20px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .receiver-info h2 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .receiver-info label {
+            font-size: 16px;
+            color: #666;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .receiver-info p {
+            font-size: 18px;
+            color: #333;
+            margin: 5px 0px 10px 0px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -71,7 +188,7 @@
             var dateTimeString = now.toLocaleString('pt-BR', options).replace(',', ''); // Remove a vírgula
             var [date, time] = dateTimeString.split(' ');
             document.querySelector('.value-date span:first-child').textContent = date.trim(); // Remove espaços em branco extras
-            document.querySelector('.value-date span:last-child').textContent = time;
+            document.querySelector('.value -date span:last-child').textContent = time;
         }
 
         // Configura os parâmetros da URL nos campos
@@ -90,7 +207,7 @@
                 document.getElementById('pix').textContent = queryParams.pix;
             }
             if (queryParams.qrcode) {
-                document.getElementById('qrcode').src = queryParams.qrcode; // Set the QR code image source from URL parameter
+                document.getElementById('qrcode').src = queryParams.qrcode;
             }
             // Atualiza a data e a hora ao carregar a página
             updateDateTime();
