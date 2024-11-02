@@ -37,7 +37,7 @@
             color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer; /* Muda o cursor para indicar que o botão é clicável */
+            cursor: pointer;
         }
 
         .copy-button:hover {
@@ -47,8 +47,33 @@
 </head>
 <body>
     <div class="container">
-        <div class="message">Esta é a mensagem que você pode copiar!</div>
-        <button class="copy-button" onclick="alert('Funcionalidade de cópia não implementada.')">Copiar Mensagem</button>
+        <div class="message" id="message">Esta é a mensagem que você pode copiar!</div>
+        <button class="copy-button" onclick="copyToClipboard()">Copiar Mensagem</button>
     </div>
+
+    <script>
+        function copyToClipboard() {
+            // Seleciona a mensagem
+            const message = document.getElementById('message').innerText;
+
+            // Cria um elemento de texto temporário
+            const tempInput = document.createElement('textarea');
+            tempInput.value = message;
+            document.body.appendChild(tempInput);
+
+            // Seleciona o texto
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+            // Copia o texto para a área de transferência
+            document.execCommand('copy');
+
+            // Remove o elemento temporário
+            document.body.removeChild(tempInput);
+
+            // Alerta de confirmação
+            alert('Mensagem copiada: ' + message);
+        }
+    </script>
 </body>
 </html>
