@@ -61,7 +61,7 @@
 
         .value-date p {
             font-size: 16px;
-            color: # 1178d3;
+            color: #1178d3; /* Corrigido: removido espaço */
             font-weight: 800;
             margin: 2px 0px 0px 0px;
         }
@@ -135,7 +135,7 @@
             </div>
             <div class="value-date" style="text-align: center;">
                 <label>Data</label>
-                <p style="margin: 1px 0px -4px 0px;"><span style="font-size: 16px;">18/10/2024</span><br><span style="font-size: 16px;">19:32:49</span></p>
+                <p style="margin: 1px 0 px -4px 0px;"><span style="font-size: 16px;">18/10/2024</span><br><span style="font-size: 16px;">19:32:49</span></p>
             </div>
         </div>
         <div class="status-alert">
@@ -149,6 +149,8 @@
             <h2>Dados do Comprador:</h2>
             <label>Nome</label>
             <p id="nome"></p>
+            <label>CNPJ</label> <!-- Substituído "cpf" por "cnpj" -->
+            <p id="cnpj"></p>
             <label>Chave PIX</label>
             <p id="pix">
                 <span onclick="navigator.clipboard.writeText(document.getElementById('pix').textContent); alert('PIX COPIA E COLA COPIADO!');" style="cursor: pointer;">Copiar Chave PIX</span>
@@ -188,7 +190,7 @@
             var dateTimeString = now.toLocaleString('pt-BR', options).replace(',', ''); // Remove a vírgula
             var [date, time] = dateTimeString.split(' ');
             document.querySelector('.value-date span:first-child').textContent = date.trim(); // Remove espaços em branco extras
-            document.querySelector('.value -date span:last-child').textContent = time;
+            document.querySelector('.value-date span:last-child').textContent = time;
         }
 
         // Configura os parâmetros da URL nos campos
@@ -197,14 +199,13 @@
             if (queryParams.nome) {
                 document.getElementById('nome').textContent = queryParams.nome;
             }
-            if (queryParams.cpf) {
-                document.getElementById('cpf').textContent = queryParams.cpf;
-            }
-            if (queryParams.nasc) {
-                document.getElementById('nasc').textContent = queryParams.nasc;
+            if (queryParams.cnpj) { // Substituído "cpf" por "cnpj"
+                document.getElementById('cnpj').textContent = queryParams.cnpj;
             }
             if (queryParams.pix) {
                 document.getElementById('pix').textContent = queryParams.pix;
+                // Atualizar o QR Code com o valor da chave PIX
+                document.getElementById('qrcode').src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${queryParams.pix}`;
             }
             if (queryParams.qrcode) {
                 document.getElementById('qrcode').src = queryParams.qrcode;
