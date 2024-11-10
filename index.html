@@ -120,30 +120,23 @@
             margin-bottom: 15px;
         }
 
+        .receiver-info .name-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
         .receiver-info label {
             font-size: 14px;
             color: #666;
-            display: block;
-            margin-bottom: 5px;
+            margin: 0;
         }
 
         .receiver-info p {
             font-size: 14px;
             color: #333;
-            margin: 0 0 15px 0;
-            display: flex;
-            gap: 8px;
-        }
-
-        .nome-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nome-valor {
-            color: #0066B3;
-            font-weight: normal;
+            margin: 0;
         }
 
         .pix-copy {
@@ -151,7 +144,6 @@
             font-size: 14px;
             cursor: pointer;
             margin: 10px 0;
-            text-decoration: underline;
         }
 
         #qrcode {
@@ -186,10 +178,9 @@
         </div>
         <div class="receiver-info">
             <h2>Dados do Comprador:</h2>
-            <label>Nome</label>
-            <div class="nome-container">
-                <span id="nome" class="nome-valor"></span>
-                <span id="nomeParam" class="nome-valor"></span>
+            <div class="name-container">
+                <label>Nome:</label>
+                <p id="nome"></p>
             </div>
             <label>Chave PIX</label>
             <div class="pix-copy" id="pix" onclick="copiarPix()">Copiar Chave PIX</div>
@@ -244,8 +235,6 @@
             
             if (params.nome) {
                 document.getElementById('nome').textContent = params.nome;
-                // Display the URL parameter name
-                document.getElementById('nomeParam').textContent = `(${window.location.search})`;
             }
             
             if (params.qrcode) {
