@@ -123,6 +123,12 @@
             margin: 5px 0px 10px 0px;
             font-weight: bold;
         }
+
+        .copy-button {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -136,46 +142,49 @@
             <div class="value-date" style="text-align: center;">
                 <label>Data</label>
                 <p style="margin: 1px 0px -4px 0px;">
-                    <span style=" font-size: 16px;">18/10/2024</span><br>
-                    <span style="font-size: 16px;">19:32:49</span>
+                    <span style="font-size: 16px;">18/10/2024</ </span>
                 </p>
             </div>
         </div>
         <div class="status-alert">
             <img src="alert-icon.png" alt="Alerta">
             <div class="status-text">
-                <strong>Atenção!</strong> Pagamento pendente.
+                <strong>Pagamento Pendente</strong>
+                <p>Por favor, finalize o pagamento.</p>
             </div>
         </div>
         <div class="receiver-info">
             <h2>Dados do Comprador</h2>
             <label>Nome</label>
-            <p id="comprador-nome"></p>
+            <p id="nome">João Silva</p>
             <label>Chave PIX</label>
-            <p id="comprador-pix"></p>
+            <p id="pix" style="display: none;">1234567890@pix.com</p>
+            <span class="copy-button" onclick="navigator.clipboard.writeText(document.getElementById('pix').textContent); alert('Chave PIX copiada!');">Copiar Chave PIX</span>
+            <br>
+            <img id="qrcode" src="" alt="QR Code">
         </div>
-        <div id="qrcode" style="text-align: center; margin: 20px;"></div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-qrcode/1.0/jquery.qrcode.min.js"></script>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const nome = urlParams.get('nome');
-        const pix = urlParams.get('pix');
+        $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nome = urlParams.get('nome');
+            const pix = urlParams.get('pix');
 
-        if (nome) {
-            document.getElementById('comprador-nome').textContent = nome;
-        } else {
-            document.getElementById('comprador-nome').textContent = 'Nome não fornecido';
-        }
+            if (nome) {
+                $('#nome').text(nome);
+            }
 
-        if (pix) {
-            document.getElementById('comprador-pix').textContent = pix;
-            const qrcode = document.createElement('img');
-            qrcode.src = `https://chart.googleapis.com/chart?cht=qr&chl=${encodeURIComponent(pix)}&chs=128x128`;
-            document.getElementById('qrcode').appendChild(qrcode);
-        } else {
-            document.getElementById('comprador-pix').textContent = 'Chave PIX não fornecida';
-        }
+            if (pix) {
+                $('#pix').text(pix);
+                $('#qrcode').qrcode({
+                    text: pix,
+                    width: 128,
+                    height: 128
+                });
+            }
+        });
     </script>
 </body>
 </html>
