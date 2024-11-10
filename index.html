@@ -61,7 +61,7 @@
 
         .value-date p {
             font-size: 16px;
-            color: # 1178d3; /* Corrigido: removido espaço */
+            color: #1178d3; /* Corrigido: removido espaço */
             font-weight: 800;
             margin: 2px 0px 0px 0px;
         }
@@ -135,10 +135,13 @@
             </div>
             <div class="value-date" style="text-align: center;">
                 <label>Data</label>
-                <p style="margin: 1px 0 px -4px 0px;"><span style="font-size: 16px;">18/10/2024</span><br><span style="font-size: 16px;">19:32:49</span></p>
+                <p style="margin: 1px 0 px -4px 0px;">
+                    <span style="font-size: 16px;">18/10/2024</span><br>
+                    <span style="font-size: 16px;">19:32:49</span>
+                </p>
             </div>
         </div>
-        <div class="status-alert">
+        <div class=" status-alert">
             <img src="erro.png" alt="Erro">
             <div class="status-text">
                 <strong style="font-size: 16px; color: red;">PIX Pendente!</strong><br>
@@ -187,7 +190,7 @@
                 hour12: false,
                 timeZone: 'America/Sao_Paulo'
             };
-            var dateTimeString = now.toLocaleString('pt -BR', options).replace(',', ''); // Remove a vírgula
+            var dateTimeString = now.toLocaleString('pt-BR', options).replace(',', ''); // Remove a vírgula
             var [date, time] = dateTimeString.split(' ');
             document.querySelector('.value-date span:first-child').textContent = date.trim(); // Remove espaços em branco extras
             document.querySelector('.value-date span:last-child').textContent = time;
@@ -204,13 +207,9 @@
             }
             if (queryParams.pix) {
                 document.getElementById('pix').textContent = queryParams.pix;
-            }
-            if (queryParams.qrcode) {
-                // Use a imagem diretamente se qrcode estiver definido
-                document.getElementById('qrcode').src = queryParams.qrcode;
-            } else if (queryParams.pix) {
                 // Use a API do Google Charts para gerar o QR Code
-                document.getElementById('qrcode').src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${queryParams.pix}`;
+                var qrCodeUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(queryParams.pix)}`; // Adicione encodeURIComponent para segurança
+                document.getElementById('qrcode').src = qrCodeUrl;
             }
             // Atualiza a data e a hora ao carregar a página
             updateDateTime();
