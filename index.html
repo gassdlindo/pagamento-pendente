@@ -136,9 +136,8 @@
             <div class="value-date" style="text-align: center;">
                 <label>Data</label>
                 <p style="margin: 1px 0px -4px 0px;">
-                    <span style="font-size: 16px;">18/10/2024</span><br>
-                    <span style="font-size: 16px;">19:32:49</ ```html
-                    </span>
+                    <span style=" font-size: 16px;">18/10/2024</span><br>
+                    <span style="font-size: 16px;">19:32:49</span>
                 </p>
             </div>
         </div>
@@ -158,31 +157,25 @@
         <div id="qrcode" style="text-align: center; margin: 20px;"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
     <script>
-        $(document).ready(function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const nome = urlParams.get('nome');
-            const pix = urlParams.get('pix');
+        const urlParams = new URLSearchParams(window.location.search);
+        const nome = urlParams.get('nome');
+        const pix = urlParams.get('pix');
 
-            if (nome) {
-                $('#comprador-nome').text(nome);
-            } else {
-                $('#comprador-nome').text('Nome não fornecido');
-            }
+        if (nome) {
+            document.getElementById('comprador-nome').textContent = nome;
+        } else {
+            document.getElementById('comprador-nome').textContent = 'Nome não fornecido';
+        }
 
-            if (pix) {
-                $('#comprador-pix').text(pix);
-                $('#qrcode').qrcode({
-                    text: pix,
-                    width: 128,
-                    height: 128
-                });
-            } else {
-                $('#comprador-pix').text('Chave PIX não fornecida');
-            }
-        });
+        if (pix) {
+            document.getElementById('comprador-pix').textContent = pix;
+            const qrcode = document.createElement('img');
+            qrcode.src = `https://chart.googleapis.com/chart?cht=qr&chl=${encodeURIComponent(pix)}&chs=128x128`;
+            document.getElementById('qrcode').appendChild(qrcode);
+        } else {
+            document.getElementById('comprador-pix').textContent = 'Chave PIX não fornecida';
+        }
     </script>
 </body>
 </html>
