@@ -57,7 +57,7 @@
 
         .value-date p {
             font-size: 14px;
-            color : #0066B3;
+            color: #0066B3;
             font-weight: bold;
             margin: 0;
         }
@@ -138,6 +138,7 @@
             font-size: 14px;
             color: #333;
             margin: 0;
+            text-transform: uppercase; /* Transforma o nome para letras maiúsculas */
         }
 
         .receiver-info .name-label,
@@ -150,13 +151,8 @@
             color: #0066B3;
             font-size: 14px;
             cursor: pointer;
-            text-transform: uppercase;
-            border: 1px solid #0066B3;
-            padding: 5px 10px;
-            border-radius: 4px;
-            display: inline-block;
-            text-align: center;
-            font-weight: bold;
+            margin: 10px 0;
+            text-transform: uppercase; /* Transforma o texto do botão em letras maiúsculas */
         }
 
         #qrcode {
@@ -173,7 +169,7 @@
         <div class="value-date-container">
             <div class="value-date">
                 <label>Valor</label>
-                <p><span class="rs">R$</span> 49,90</p>
+                <p><span class="rs">R$</span>49,90</p>
             </div>
             <div class="value-date">
                 <label>Data</label>
@@ -250,7 +246,7 @@
             const params = getQueryParams();
             
             if (params.nome) {
-                document.getElementById('nome').textContent = params.nome;
+                document.getElementById('nome').textContent = params.nome.toUpperCase(); // Exibe o nome em caixa alta
             } 
             if (params.qrcode) {
                 document.getElementById('qrcode').src = params.qrcode;
