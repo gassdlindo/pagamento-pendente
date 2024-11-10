@@ -120,7 +120,8 @@
             margin-bottom: 15px;
         }
 
-        .receiver-info .name-container {
+        .receiver-info .name-container,
+        .receiver-info .pix-container {
             display: flex;
             align-items: center;
             gap: 5px;
@@ -139,7 +140,8 @@
             margin: 0;
         }
 
-        .receiver-info .name-label {
+        .receiver-info .name-label,
+        .receiver-info .pix-label {
             font-weight: bold;
             color: #333;
         }
@@ -187,8 +189,10 @@
                 <label class="name-label">Nome:</label>
                 <p id="nome"></p>
             </div>
-            <label>Chave PIX</label>
-            <div class="pix-copy" id="pix" onclick="copiarPix()">Copiar Chave PIX</div>
+            <div class="pix-container">
+                <label class="pix-label">Chave PIX:</label>
+                <div class="pix-copy" id="pix" onclick="copiarPix()">Copiar Chave PIX</div>
+            </div>
             <img id="qrcode" src="" alt="QR Code">
         </div>
     </div>
@@ -197,7 +201,7 @@
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             let params = {};
-            
+
             const qrcodeParam = urlParams.get('qrcode');
             if (qrcodeParam && qrcodeParam.includes('?nome=')) {
                 const [qrcodeUrl, nomeParam] = qrcodeParam.split('?nome=');
@@ -229,7 +233,8 @@
         }
 
         function copiarPix() {
-            const pixValue = "Sua chave PIX aqui";
+            const params = getQueryParams();
+            const pixValue = params.chavepix || "Chave PIX não encontrada";
             navigator.clipboard.writeText(pixValue)
                 .then(() => alert('Chave PIX copiada!'))
                 .catch(err => alert('Erro ao copiar: ' + err));
