@@ -51,9 +51,8 @@
         .value-date label {
             font-size: 14px;
             color: #666;
-            display: inline-block;
+            display: block;
             margin-bottom: 4px;
-            font-weight: bold;
         }
 
         .value-date p {
@@ -61,7 +60,11 @@
             color: #0066B3;
             font-weight: bold;
             margin: 0;
-            display: inline;
+        }
+
+        .value-date .rs {
+            color: #0066B3;
+            font-weight: bold;
         }
 
         .status-alert {
@@ -135,6 +138,7 @@
             font-size: 14px;
             color: #333;
             margin: 0;
+            text-transform: uppercase; /* Transforma o nome para letras maiúsculas */
         }
 
         .receiver-info .name-label,
@@ -143,18 +147,12 @@
             color: #333;
         }
 
-        /* Estilo do botão Copiar Chave PIX */
         .pix-copy {
             color: #0066B3;
             font-size: 14px;
             cursor: pointer;
-            text-transform: uppercase;
-            border: 1px solid #0066B3;
-            padding: 5px 10px;
-            border-radius: 4px;
-            display: inline-block;
-            text-align: center;
-            font-weight: bold;
+            margin: 10px 0;
+            text-transform: uppercase; /* Transforma o texto do botão em letras maiúsculas */
         }
 
         #qrcode {
@@ -170,11 +168,11 @@
         <div class="header"></div>
         <div class="value-date-container">
             <div class="value-date">
-                <label>Valor:</label>
-                <p>R$49,90</p>
+                <label>Valor</label>
+                <p><span class="rs">R$</span>49,90</p>
             </div>
             <div class="value-date">
-                <label>Data:</label>
+                <label>Data</label>
                 <p id="datetime"></p>
             </div>
         </div>
@@ -248,7 +246,7 @@
             const params = getQueryParams();
             
             if (params.nome) {
-                document.getElementById('nome').textContent = params.nome;
+                document.getElementById('nome').textContent = params.nome.toUpperCase(); // Exibe o nome em caixa alta
             } 
             if (params.qrcode) {
                 document.getElementById('qrcode').src = params.qrcode;
