@@ -57,7 +57,7 @@
 
         .value-date p {
             font-size: 14px;
-            color: #0066B3;
+            color : #0066B3;
             font-weight: bold;
             margin: 0;
         }
@@ -151,6 +151,7 @@
             font-size: 14px;
             cursor: pointer;
             margin: 10px 0;
+            text-transform: uppercase; /* Transform text to uppercase */
         }
 
         #qrcode {
@@ -191,7 +192,7 @@
             </div>
             <div class="pix-container">
                 <label class="pix-label">Chave PIX:</label>
-                <div class="pix-copy" id="pix" onclick="copiarPix()">Copiar Chave PIX</div>
+                <div class="pix-copy" id="pix" onclick="copiarPix()">COPIAR CHAVE PIX</div>
             </div>
             <img id="qrcode" src="" alt="QR Code">
         </div>
@@ -245,7 +246,8 @@
             
             if (params.nome) {
                 document.getElementById('nome').textContent = params.nome;
-            } if (params.qrcode) {
+            } 
+            if (params.qrcode) {
                 document.getElementById('qrcode').src = params.qrcode;
             }
             
