@@ -17,11 +17,9 @@
         }
 
         .container {
-            width: 277px;
-            height: 700px;
-            padding: 0;
+            width: 300px;
+            padding: 20px;
             background-color: #fff;
-            overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
@@ -31,30 +29,26 @@
             background-size: cover;
             background-repeat: no-repeat;
             color: white;
-            padding: 60px;
+            padding: 20px;
+            text-align: center;
         }
 
         .value-date-container {
             background-color: #fff;
             border-radius: 8px;
             padding: 10px;
-            margin: -30px 20px 15px;
+            margin: 15px 0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            position: relative;
         }
 
         .value-date {
             text-align: left;
-            position: relative;
-            padding: 0 5px;
-            z-index: 1;
         }
 
         .value-date label {
-            font-size: 16px;
+            font-size: 14px;
             color: #666;
             font-weight: bold;
         }
@@ -63,65 +57,28 @@
             font-size: 16px;
             color: #1178d3;
             font-weight: 800;
-            margin: 2px 0px 0px 0px;
+            margin: 2px 0;
         }
 
         .status-alert {
             background-color: #f7f7f7;
             color: #333;
-            text-align: left;
             padding: 15px;
-            margin: 0 20px;
             border-radius: 4px;
-            display: flex;
-            align-items: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
         }
 
         .status-alert img {
-            height: 45px;
-            margin-right: 19px;
-        }
-
-        .status-text {
-            color: #ff635f;
-            font-size: 18px;
-        }
-
-        .status-text strong {
-            font-weight: bold;
-            color: #d9534f;
-            margin-bottom: 5px;
+            height: 20px;
+            margin-right: 10px;
         }
 
         .receiver-info {
             padding: 20px;
             background-color: #f7f7f7;
             border-radius: 4px;
-            margin: 15px 20px 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .receiver-info h2 {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .receiver-info label {
-            font-size: 16px;
-            color: #666;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .receiver-info p {
-            font-size: 18px;
-            color: #333;
-            margin: 5px 0px 10px 0px;
-            font-weight: bold;
         }
 
         .copy-button {
@@ -129,7 +86,7 @@
             color: #007bff;
             text-decoration: underline;
             font-weight: bold;
-            padding: 5px 10px;
+            padding: 5px;
             border: 1px solid #007bff;
             border-radius: 5px;
             background-color: #f0f8ff;
@@ -149,35 +106,32 @@
     </style>
 </head>
 <body>
-    <div class="container <div class="header"></div>
+    <div class="container">
+        <div class="header">Pagamento Pendente</div>
         <div class="value-date-container">
             <div class="value-date">
                 <label>Valor</label>
                 <p>R$ 49,90</p>
             </div>
-            <div class="value-date" style="text-align: center;">
+            <div class="value-date">
                 <label>Data</label>
-                <p style="margin: 1px 0px -4px 0px;">
-                    <span style="font-size: 16px;">18/10/2024</span>
-                </p>
+                <p>18/10/2024</p>
             </div>
         </div>
         <div class="status-alert">
             <img src="alert-icon.png" alt="Alerta">
-            <div class="status-text">
-                <strong>Pagamento Pendente</strong>
-                <p>Por favor, finalize o pagamento.</p>
-            </div>
+            <strong>Pagamento Pendente</strong>
+            <p>Por favor, finalize o pagamento.</p>
         </div>
         <div class="receiver-info">
             <h2>Dados do Comprador</h2>
             <label>Nome</label>
             <p id="nome">João Silva</p>
             <label>Chave PIX</label>
-            <p id="pix" style="display: none;">1234567890@pix.com</p>
+            <p id="pix" style="display: none;">1234567890@ pix.com</p>
             <span class="copy-button" onclick="navigator.clipboard.writeText(document.getElementById('pix').textContent); alert('Chave PIX copiada!');">Copiar Chave PIX</span>
             <br>
-            <img id="qrcode" src="" alt="QR Code">
+            <img id="qrcode" src="" alt="QR Code" style="display: none;">
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
