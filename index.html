@@ -120,30 +120,17 @@
             margin-bottom: 15px;
         }
 
-        .receiver-info .name-container,
-        .receiver-info .pix-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-
         .receiver-info label {
             font-size: 14px;
             color: #666;
-            margin: 0;
+            display: block;
+            margin-bottom: 5px;
         }
 
         .receiver-info p {
             font-size: 14px;
             color: #333;
-            margin: 0;
-        }
-
-        .receiver-info .name-label,
-        .receiver-info .pix-label {
-            font-weight: bold;
-            color: #333;
+            margin: 0 0 15px 0;
         }
 
         .pix-copy {
@@ -185,14 +172,10 @@
         </div>
         <div class="receiver-info">
             <h2>Dados do Comprador:</h2>
-            <div class="name-container">
-                <label class="name-label">Nome:</label>
-                <p id="nome"></p>
-            </div>
-            <div class="pix-container">
-                <label class="pix-label">Chave PIX:</label>
-                <div class="pix-copy" id="pix" onclick="copiarPix()">Copiar Chave PIX</div>
-            </div>
+            <label>Nome</label>
+            <p id="nome"></p>
+            <label>Chave PIX</label>
+            <div class="pix-copy" id="pix" onclick="copiarPix()">Copiar Chave PIX</div>
             <img id="qrcode" src="" alt="QR Code">
         </div>
     </div>
@@ -201,25 +184,15 @@
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             let params = {};
-
-            // Tente diferentes formas de passar o QR code
-            const qrcodeParam = urlParams.get('qrcode') || urlParams.get('qr') || urlParams.get('qrcode_url');
             
-            if (qrcodeParam) {
-                // Verificar se há parâmetro de nome junto
-                if (qrcodeParam.includes('?nome=')) {
-                    const [qrcodeUrl, nomeParam] = qrcodeParam.split('?nome=');
-                    params.qrcode = decodeURIComponent(qrcodeUrl);
-                    params.nome = decodeURIComponent(nomeParam);
-                } else {
-                    params.qrcode = decodeURIComponent(qrcodeParam);
-                }
-            }
-
-            // Pegar outros parâmetros
-            for (const [key, value] of urlParams) {
-                if (key !== 'qrcode' && key !== 'qr' && key !== 'qrcode_url') {
-                    params[key] = decodeURIComponent(value);
+            const qrcodeParam = urlParams.get('qrcode');
+            if (qrcodeParam && qrcodeParam.includes('?nome=')) {
+                const [qrcodeUrl, nomeParam] = qrcodeParam.split('?nome=');
+                params.qrcode = qrcodeUrl;
+                params.nome = nomeParam;
+            } else {
+                for (const [key, value] of urlParams) {
+                    params[key] = value;
                 }
             }
             
@@ -243,8 +216,7 @@
         }
 
         function copiarPix() {
-            const params = get QueryParams();
-            const pixValue = params.chavepix || "Chave PIX não encontrada";
+            const pixValue = "Sua chave PIX aqui";
             navigator.clipboard.writeText(pixValue)
                 .then(() => alert('Chave PIX copiada!'))
                 .catch(err => alert('Erro ao copiar: ' + err));
@@ -253,33 +225,12 @@
         window.onload = function() {
             const params = getQueryParams();
             
-            // Nome do comprador
             if (params.nome) {
                 document.getElementById('nome').textContent = params.nome;
             }
             
-            // QR Code
             if (params.qrcode) {
-                const qrcodeImg = document.getElementById('qrcode');
-                qrcodeImg.src = params.qrcode;
-                
-                // Adicione um listener para verificar se a imagem carregou
-                qrcodeImg.onerror = function() {
-                    console.error('Erro ao carregar QR code');
-                    this.style.display = 'none'; // Esconde a imagem se não carregar
-                    alert('Não foi possível carregar o QR Code');
-                };
-
-                // Adicione um listener de sucesso
-                qrcodeImg.onload = function() {
-                    console.log('QR Code carregado com sucesso');
-                    this.style.display = 'block';
-                };
-            }
-            
-            // Chave PIX
-            if (params.chavepix) {
-                document.getElementById('pix').textContent = params.chavepix;
+                document.getElementById('qrcode').src = params.qrcode;
             }
             
             updateDateTime();
