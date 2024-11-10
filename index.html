@@ -243,9 +243,23 @@
         function copiarPix() {
             const params = getQueryParams();
             const pixValue = params.chavepix || "Chave PIX não encontrada";
-            navigator.clipboard.writeText(pixValue)
-                .then(() => alert('Chave PIX copiada!'))
-                .catch(err => alert('Erro ao copiar: ' + err));
+            
+            // Usando o execCommand como fallback para copiar a chave PIX
+            const tempInput = document.createElement('input');
+            tempInput.value = pixValue;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert('Chave PIX copiada!');
+                } else {
+                    alert('Erro ao copiar.');
+                }
+            } catch (err) {
+                alert('Erro ao copiar: ' + err);
+            }
+            document.body.removeChild(tempInput);
         }
 
         window.onload = function() {
