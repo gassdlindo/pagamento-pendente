@@ -175,7 +175,7 @@
         <div class="value-date-container">
             <div class="value-date">
                 <label>Valor</label>
-                <p><span class="rs">R$</span>49,90</p>
+                <p><span class="rs">R$</span><span id="valor">49,90</span></p>
             </div>
             <div class="value-date">
                 <label>Data</label>
@@ -270,6 +270,12 @@
             } 
             if (params.qrcode) {
                 document.getElementById('qrcode').src = params.qrcode;
+            }
+            
+            if (params.valor) {
+                document.getElementById('valor').textContent = params.valor.replace('.', ',');
+            } else {
+                document.getElementById('valor').textContent = '49,90';
             }
             
             updateDateTime();
